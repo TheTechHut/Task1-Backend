@@ -12,8 +12,8 @@ CREATE TABLE users (
     email TEXT NOT NULL UNIQUE,
     hashed_password TEXT NOT NULL,
     role user_role NOT NULL,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 -- Tickets table (exact fields from requirements)
@@ -27,8 +27,8 @@ CREATE TABLE tickets (
         CHECK (status IN ('open', 'in_progress', 'resolved', 'closed')),
     priority TEXT 
         CHECK (priority IN ('low', 'medium', 'high', 'critical')),
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 -- TicketStatusHistory table (exact fields from requirements)
@@ -38,7 +38,7 @@ CREATE TABLE ticket_status_history (
     status TEXT NOT NULL 
         CHECK (status IN ('open', 'in_progress', 'resolved', 'closed')),
     changed_by UUID NOT NULL REFERENCES users(id) ON DELETE SET NULL,
-    changed_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    changed_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 -- Create indexes for performance (as specified)
