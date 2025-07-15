@@ -1,5 +1,41 @@
 
-# Ticketing System Database Schema
+# PostgreSQL Ticketing System Database
+
+## Overview
+
+I've designed a secure, auditable ticketing system database with:
+
+- **User roles**: Customers, Agents, and Admins
+- **Ticket lifecycle tracking**: From creation to resolution
+- **Row-Level Security (RLS)**: Strict data access controls
+- **Full audit trails**: Every status change is recorded
+
+## Schema Features
+
+### Core Tables
+
+1. **Users**
+
+   - Stores all user accounts with hashed passwords
+   - Role-based permissions (customer/agent/admin)
+2. **Tickets**
+
+   - Tracks all ticket details and current status
+   - Relationships to customers and assigned agents
+3. **TicketStatusHistory**
+
+   - Complete audit trail of all status changes
+   - Tracks who made changes and when
+
+### Security Implementation
+
+- **Password security**: All passwords are stored hashed
+- **Row-Level Security Policies**:
+  ```sql
+  -- Customers only see their tickets
+  CREATE POLICY customer_policy ON tickets
+    FOR SELECT USING (customer_id = current_user_id());
+  ```
 
 ## Design Rationale
 
